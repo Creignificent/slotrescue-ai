@@ -21,56 +21,58 @@
     --warn: #e0b15a;
   }
   * { box-sizing: border-box; }
-  html, body { margin: 0; background: var(--bg); color: var(--text); font-family: Outfit, system-ui, sans-serif; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); font-family: Outfit, system-ui, sans-serif; overflow-x: hidden; }
   body { min-height: 100dvh; }
-  button, input, select { font: inherit; color: inherit; }
-  button { cursor: pointer; }
-  .wrap { max-width: 480px; margin: 0 auto; padding: 18px 16px 108px; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  button { cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  .wrap { width: min(480px, 100%); margin: 0 auto; padding: 18px 16px calc(96px + env(safe-area-inset-bottom)); }
   .brand { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
   .mark { font-family: Fraunces, serif; font-size: 22px; letter-spacing: -.03em; }
   .mark span { color: var(--gold); }
   .sponsor { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-  .pill { border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; font-size: 12px; color: var(--muted); }
+  .pill { border: 1px solid var(--line); border-radius: 999px; padding: 8px 10px; font-size: 12px; color: var(--muted); white-space: nowrap; }
   .pill.live { color: var(--good); border-color: rgba(61,190,140,.4); }
   .pill.dead { color: var(--bad); border-color: rgba(225,93,78,.45); }
-  h1 { font-family: Fraunces, serif; font-weight: 560; font-size: 40px; line-height: .95; letter-spacing: -.03em; margin: 22px 0 10px; }
-  h2 { font-family: Fraunces, serif; font-size: 28px; margin: 8px 0 6px; letter-spacing: -.03em; }
+  h1 { font-family: Fraunces, serif; font-weight: 560; font-size: clamp(32px, 10vw, 40px); line-height: .95; letter-spacing: -.03em; margin: 22px 0 10px; }
+  h2 { font-family: Fraunces, serif; font-size: clamp(24px, 7vw, 28px); margin: 8px 0 6px; letter-spacing: -.03em; }
   p.lede { color: var(--muted); font-size: 16px; line-height: 1.45; margin: 0 0 18px; }
   .gold { color: var(--gold-2); }
-  .btn { width: 100%; border: 0; border-radius: 14px; padding: 15px 16px; background: var(--gold); color: #1a1408; font-weight: 560; letter-spacing: .04em; }
+  .btn { width: 100%; min-height: 48px; border: 0; border-radius: 14px; padding: 14px 16px; background: var(--gold); color: #1a1408; font-weight: 560; letter-spacing: .02em; }
+  .btn:active { transform: scale(.98); }
   .btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
   .btn.bad { background: transparent; color: var(--bad); border: 1px solid rgba(225,93,78,.4); }
   .btn + .btn { margin-top: 8px; }
   .rowbtn { display: flex; gap: 8px; }
-  .rowbtn .btn { width: auto; flex: 1; }
+  .rowbtn .btn { width: auto; flex: 1; min-width: 0; }
   table { width: 100%; border-collapse: collapse; margin: 8px 0 16px; }
   th { text-align: left; font-size: 13px; color: var(--muted); font-weight: 460; padding: 8px 0; border-bottom: 1px solid var(--line); }
-  td { vertical-align: top; padding: 16px 10px 16px 0; border-bottom: 1px solid var(--line); font-size: 16px; line-height: 1.3; }
+  td { vertical-align: top; padding: 16px 10px 16px 0; border-bottom: 1px solid var(--line); font-size: 16px; line-height: 1.3; overflow-wrap: anywhere; }
   td.fn { color: var(--muted); font-size: 14px; width: 46%; }
   tr.tap { cursor: pointer; }
+  tr.tap:active td { color: var(--gold-2); }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px; margin: 10px 0; }
   .card h3 { margin: 0 0 4px; font-size: 16px; }
-  .meta { color: var(--muted); font-size: 13px; line-height: 1.4; }
+  .meta { color: var(--muted); font-size: 13px; line-height: 1.4; overflow-wrap: anywhere; }
   .tag { display: inline-block; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; border: 1px solid var(--line); border-radius: 999px; padding: 3px 8px; margin-right: 6px; color: var(--gold-2); }
   .tag.good { color: var(--good); }
   .tag.bad { color: var(--bad); }
   .kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .kpi { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
+  .kpi { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px; min-width: 0; }
   .kpi b { display: block; font-family: Fraunces, serif; font-size: 26px; }
   .kpi span { color: var(--muted); font-size: 12px; }
-  .nav { position: fixed; left: 0; right: 0; bottom: 0; background: rgba(7,8,10,.92); backdrop-filter: blur(10px); border-top: 1px solid var(--line); display: flex; justify-content: space-around; padding: 8px 6px calc(8px + env(safe-area-inset-bottom)); }
-  .nav button { background: none; border: 0; color: var(--muted); font-size: 11px; letter-spacing: .04em; padding: 6px; }
+  .nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 4; background: rgba(7,8,10,.96); backdrop-filter: blur(10px); border-top: 1px solid var(--line); display: flex; justify-content: space-between; padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); }
+  .nav button { flex: 1; min-height: 48px; background: none; border: 0; color: var(--muted); font-size: 12px; letter-spacing: .02em; padding: 8px 2px; }
   .nav button.on { color: var(--gold-2); }
   .screen { display: none; }
   .screen.on { display: block; }
   label { display: block; font-size: 12px; color: var(--muted); margin: 10px 0 4px; }
-  input, select, textarea { width: 100%; background: #0c0e12; border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
-  textarea { min-height: 120px; }
+  input, select, textarea { width: 100%; background: #0c0e12; border: 1px solid var(--line); border-radius: 12px; padding: 12px; font-size: 16px; }
+  textarea { min-height: 140px; }
   .note { font-size: 12px; color: var(--muted); line-height: 1.45; }
-  .offer { white-space: pre-wrap; font-size: 14px; line-height: 1.45; }
-  .check { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--line); }
-  .check input { width: auto; margin-top: 4px; }
-  .toast { position: fixed; left: 16px; right: 16px; bottom: 78px; background: #1c2118; border: 1px solid rgba(61,190,140,.4); color: var(--text); border-radius: 12px; padding: 12px; display: none; z-index: 5; }
+  .offer { white-space: pre-wrap; font-size: 14px; line-height: 1.45; overflow-wrap: anywhere; }
+  .check { display: flex; gap: 10px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); min-height: 48px; }
+  .check input { width: 22px; height: 22px; margin-top: 2px; flex: none; }
+  .toast { position: fixed; left: 16px; right: 16px; bottom: calc(78px + env(safe-area-inset-bottom)); background: #1c2118; border: 1px solid rgba(61,190,140,.4); color: var(--text); border-radius: 12px; padding: 12px; display: none; z-index: 6; }
   .steps { display: flex; gap: 6px; margin: 8px 0 12px; }
   .steps i { height: 3px; flex: 1; background: var(--line); border-radius: 99px; display: block; }
   .steps i.on { background: var(--gold); }
@@ -223,12 +225,14 @@ function toast(msg) {
   t.style.display = "block";
   setTimeout(() => t.style.display = "none", 2400);
 }
-function esc(s) { return String(s).replace(/[&<>"]/g, c => ({"&":"&","<":"<",">":">","\"":"""}[c])); }
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return ({ "&": "&", "<": "<", ">": ">", '"': """ })[c]; }); }
 function go(id) {
   document.querySelectorAll(".screen").forEach(n => n.classList.remove("on"));
-  document.getElementById(id).classList.add("on");
+  const screen = document.getElementById(id);
+  if (!screen) return;
+  screen.classList.add("on");
   document.querySelectorAll(".nav button").forEach(b => b.classList.remove("on"));
-  const map = { home: "n-home", rescue: "n-rescue", revenue: "n-rev", settings: "n-set" };
+  const map = { home: "n-home", list: "n-home", rescue: "n-rescue", book: "n-rescue", revenue: "n-rev", settings: "n-set" };
   if (map[id]) document.getElementById(map[id]).classList.add("on");
   if (id === "settings") renderAudit();
   if (id === "revenue") renderRevenue();
@@ -254,7 +258,7 @@ function paint() {
     ["Revenue Dashboard", "Tracks recovered sales from filled openings", "revenue"]
   ];
   document.getElementById("comptable").innerHTML = rows.map(r =>
-    `<tr class="tap" onclick="openComp('${r[2]}')"><td>${r[0]}</td><td class="fn">${r[1]}</td></tr>`
+    `<tr class="tap" role="button" tabindex="0" onclick="openComp('${r[2]}')"><td>${r[0]}</td><td class="fn">${r[1]}</td></tr>`
   ).join("");
   document.getElementById("revkpis").innerHTML =
     `<div class="kpi"><b>$${recovered}</b><span>Recovered sales</span></div>
@@ -271,22 +275,23 @@ function showList(key) {
   const body = document.getElementById("listbody");
   go("list");
   document.getElementById("n-wait").classList.toggle("on", key === "waitlist");
+  const back = `<button class="btn ghost" onclick="go('home')">Back to command center</button>`;
   if (key === "appts") {
     title.textContent = "Today's appointments";
-    body.innerHTML = s.appointments.map(a => cardAppt(a, true)).join("");
+    body.innerHTML = s.appointments.map(a => cardAppt(a, true)).join("") + back;
   } else if (key === "open") {
     title.textContent = "Open cancellations";
     const open = s.appointments.filter(a => a.status === "open");
-    body.innerHTML = open.length ? open.map(a => cardAppt(a, false)).join("") + `<button class="btn" onclick="startRescue()">FIND A REPLACEMENT CUSTOMER</button>` : `<p class="meta">No open slots.</p>`;
+    body.innerHTML = (open.length ? open.map(a => cardAppt(a, false)).join("") + `<button class="btn" onclick="startRescue()">FIND A REPLACEMENT CUSTOMER</button>` : `<p class="meta">No open slots.</p>`) + back;
   } else if (key === "waitlist") {
     title.textContent = "Customer waitlist";
-    body.innerHTML = s.waitlist.map(w => `<div class="card"><div class="tag ${w.consent ? "good" : "bad"}">${w.consent ? "Opted in" : "No consent"}</div><h3>${esc(w.name)}</h3><p class="meta">${esc(w.service)} · ${esc(w.window)} · priority ${w.priority}<br>${esc(w.email)}</p></div>`).join("") + addWaitForm();
+    body.innerHTML = s.waitlist.map(w => `<div class="card"><div class="tag ${w.consent ? "good" : "bad"}">${w.consent ? "Opted in" : "No consent"}</div><h3>${esc(w.name)}</h3><p class="meta">${esc(w.service)} · ${esc(w.window)} · priority ${w.priority}<br>${esc(w.email)}</p></div>`).join("") + addWaitForm() + back;
   } else if (key === "recovered") {
     title.textContent = "Recovered bookings";
-    const rec = s.appointments.filter(a => a.status === "recovered" || a.status === "completed");
-    body.innerHTML = rec.map(a => cardAppt(a, false)).join("") || `<p class="meta">None yet.</p>`;
+    body.innerHTML = (recSafe(s).map(a => cardAppt(a, false)).join("") || `<p class="meta">None yet.</p>`) + back;
   }
 }
+function recSafe(s) { return s.appointments.filter(a => a.status === "recovered" || a.status === "completed"); }
 function cardAppt(a, canCancel) {
   const label = a.status === "open" ? "Open slot" : a.status === "recovered" ? "Recovered" : a.status;
   return `<div class="card"><div class="tag">${esc(label)}</div><h3>${esc(a.time)} · ${esc(a.service)}</h3><p class="meta">${esc(a.staff)} · $${a.price}${a.customer ? " · " + esc(a.customer) : ""}${a.canceledFrom ? "<br>Canceled by " + esc(a.canceledFrom) : ""}</p>${canCancel && a.status === "scheduled" ? `<button class="btn ghost" onclick="cancelAppt('${a.id}')">Mark canceled</button>` : ""}</div>`;
