@@ -1,10 +1,4 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  reactStrictMode: true,
-  async redirects() {
-    return [{ source: "/command", destination: "/command-center.html", permanent: false }];
-  }
-};
-
+const nextConfig: NextConfig = { reactStrictMode: true };
 export default nextConfig;
