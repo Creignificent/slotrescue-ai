@@ -225,7 +225,14 @@ function toast(msg) {
   t.style.display = "block";
   setTimeout(() => t.style.display = "none", 2400);
 }
-function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return ({ "&": "&", "<": "<", ">": ">", '"': """ })[c]; }); }
+function esc(s) {
+  return String(s).replace(/[&<>\"]/g, function (c) {
+    if (c === "&") return "&" + "amp;";
+    if (c === "<") return "&" + "lt;";
+    if (c === ">") return "&" + "gt;";
+    return "&" + "quot;";
+  });
+}
 function go(id) {
   document.querySelectorAll(".screen").forEach(n => n.classList.remove("on"));
   const screen = document.getElementById(id);
